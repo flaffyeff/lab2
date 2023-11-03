@@ -8,7 +8,7 @@ public class AutoSalon {
     private String address;
     private int phoneNumber;
     private int capacity;
-    private List<Car> cars = new ArrayList<>();
+    private List<Car> cars;
 
     public AutoSalon(String name, String address, int phoneNumber, int capacity) {
         this.name = name;

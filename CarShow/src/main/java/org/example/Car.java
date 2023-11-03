@@ -1,13 +1,55 @@
 package org.example;
 
-public class Car {
+import java.io.*;
+
+public class Car implements Serializable {
     private String brand;
     private String model;
     private int year;
     private int price;
 
-    public Car() {
+    //public Car() {
+    //
+    //}
 
+    public void serializeObject(Car car, String fileName) throws IOException {
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(fileName))) {
+            outputStream.writeObject(car);
+        }
+    }
+    public Car deserializeObject(String fileName) throws IOException, ClassNotFoundException {
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(fileName))) {
+            return (Car) inputStream.readObject();
+        }
+    }
+
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        // Определите, какие поля объекта должны быть сериализованы
+        out.writeObject(brand);
+        out.writeObject(model);
+        out.writeObject(year);
+        out.writeObject(price);
+    }
+
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        // Восстановите объект из сериализованных данных
+        brand = (String) in.readObject();
+        model = (String) in.readObject();
+        year = (int) in.readObject();
+        price = (int) in.readObject();
+    }
+    // Метод для кастомной сериализации объекта в файл
+    public void customSerializeObject(Car car, String fileName) throws IOException {
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(fileName))) {
+            outputStream.writeObject(car);
+        }
+    }
+
+    // Метод для кастомной десериализации объекта из файла
+    public Car customDeserializeObject(String fileName) throws IOException, ClassNotFoundException {
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(fileName))) {
+            return (Car) inputStream.readObject();
+        }
     }
 
     public String getBrand() {
